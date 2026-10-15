@@ -29,13 +29,9 @@ export const dataSourceOptions: DataSourceOptions = {
   password: process.env.DB_PASSWORD ?? '',
   database: getRequiredEnvironmentVariable('DB_DATABASE'),
 
-  entities: [
-    join(process.cwd(), 'src', '**', '*.entity{.ts,.js}'),
-  ],
+  entities: [join(process.cwd(), 'src', '**', '*.entity{.ts,.js}')],
 
-  migrations: [
-    join(process.cwd(), 'db', 'migrations', '*{.ts,.js}'),
-  ],
+  migrations: [join(process.cwd(), 'db', 'migrations', '*{.ts,.js}')],
 
   synchronize: false,
   migrationsRun: false,

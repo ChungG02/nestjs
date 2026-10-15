@@ -7,8 +7,9 @@ import { AppService } from './app.service';
 
 import databaseConfig from './config/database.config';
 import { envValidationSchema } from './config/env.validation';
-import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { RbacModule } from './modules/rbac/rbac.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { AuthModule } from './modules/auth/auth.module';
 
     UsersModule,
     AuthModule,
+    RbacModule,
   ],
 
   controllers: [AppController],

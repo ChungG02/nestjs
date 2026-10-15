@@ -3,9 +3,13 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  OneToMany,
   PrimaryGeneratedColumn,
+  Relation,
   UpdateDateColumn,
 } from 'typeorm';
+
+import { UserRoleEntity } from '../../rbac/entities/user-role.entity';
 
 @Entity({ name: 'users' })
 @Index('uq_users_email', ['email'], { unique: true })
@@ -40,6 +44,9 @@ export class UserEntity {
     default: true,
   })
   isActive!: boolean;
+
+  @OneToMany(() => UserRoleEntity, (userRole) => userRole.user)
+  userRoles!: Relation<UserRoleEntity[]>;
 
   @CreateDateColumn({
     name: 'created_at',

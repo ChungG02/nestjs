@@ -15,6 +15,8 @@ import { RegisterDto } from './dto/register.dto';
 import { AuthenticatedUser } from './types/authenticated-user.interface';
 import { LoginResponse } from './types/login-response.interface';
 import { RegisterResponse } from './types/register-response.interface';
+import { PERMISSION_CODES } from '../rbac/constants/rbac.constants';
+import { RequirePermissions } from '../rbac/decorators/require-permissions.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -37,5 +39,14 @@ export class AuthController {
   @Get('me')
   getMe(@CurrentUser() user: AuthenticatedUser): AuthenticatedUser {
     return user;
+  }
+
+  @Get('permission-check')
+  @RequirePermissions(PERMISSION_CODES.ROLE_MANAGE)
+  checkPermission(@CurrentUser() user: AuthenticatedUser) {
+    return {
+      message: 'Bạn có quyền truy cập',
+      user,
+    };
   }
 }

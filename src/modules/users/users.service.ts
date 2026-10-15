@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 
 import { UserEntity } from './entities/user.entity';
 import { CreateUserInput } from './types/create-user-input.interface';
@@ -12,13 +12,21 @@ export class UsersService {
     private readonly usersRepository: Repository<UserEntity>,
   ) {}
 
-  async create(input: CreateUserInput): Promise<UserEntity> {
-    const user = this.usersRepository.create({
+  async create(
+    input: CreateUserInput,
+    entityManager?: EntityManager,
+  ): Promise<UserEntity> {
+    const usersRepository = entityManager
+      ? entityManager.getRepository(UserEntity)
+      : this.usersRepository;
+
+    const user = usersRepository.create({
       email: this.normalizeEmail(input.email),
       passwordHash: input.passwordHash,
       displayName: input.displayName.trim(),
     });
-    return this.usersRepository.save(user);
+
+    return usersRepository.save(user);
   }
 
   async findByEmail(email: string): Promise<UserEntity | null> {

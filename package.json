@@ -23,7 +23,8 @@
     "migration:generate": "npm run typeorm -- migration:generate -d db/data-source.ts",
     "migration:run": "npm run typeorm -- migration:run -d db/data-source.ts",
     "migration:revert": "npm run typeorm -- migration:revert -d db/data-source.ts",
-    "migration:show": "npm run typeorm -- migration:show -d db/data-source.ts"
+    "migration:show": "npm run typeorm -- migration:show -d db/data-source.ts",
+    "seed:rbac": "ts-node -r tsconfig-paths/register db/seeds/rbac.seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
